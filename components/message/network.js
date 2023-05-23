@@ -1,6 +1,6 @@
 const express = require('express');
 const response = require('../../network/response');
-
+const controller = require('./controller');
 const router = express.Router();
 
 router.get('/',(req,res)=>{
@@ -8,11 +8,13 @@ router.get('/',(req,res)=>{
 });
 
 router.post('/',(req,res)=>{
-     if (req.query.error == 'ok'){
-          response.error(req, res, 'Error simulado', 500, 'es solo una simulacion');
-     }else {
-          response.success(req,res,'New Message Added',200);
-     }
+   
+    
+    controller.addMessage(req.body.user, req.body.message).then(
+     (fullMessage)=> response.success(req, res, fullMessage,201)
+    ).catch(e=>{
+          response.error(req, res, 'Error de datos', 400);
+    })
      
 });
 
