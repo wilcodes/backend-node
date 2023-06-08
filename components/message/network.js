@@ -4,12 +4,14 @@ const controller = require('./controller');
 const router = express.Router();
 
 router.get('/',(req,res)=>{
-    response.success(req, res,'messaged Added from Network messages');
+    controller.getMessages().then((messagesList)=>{
+        response.success(req, res , messagesList);
+    })
+    
 });
 
 router.post('/',(req,res)=>{
    
-    
     controller.addMessage(req.body.user, req.body.message).then(
      (fullMessage)=> response.success(req, res, fullMessage,201)
     ).catch(e=>{
