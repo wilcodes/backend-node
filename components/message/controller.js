@@ -20,14 +20,52 @@ return new Promise((resolve, reject)=>{
 })
 };
 
-const getMessages = () =>{
+const getMessages = (user) =>{
      return new Promise((resolve, reject)=>{
-          resolve(store.list())
+          resolve(store.list(user));
      })
 };
+
+const updateMessage = (id, message) =>{
+
+     return new Promise(async (resolve, reject)=>{
+        
+          if(!message || !id){
+               console.error("Error in message controller:[updateMessage]");
+               reject('Message Is Empty');
+               return false;
+          }
+          const data = await store.update(id, message);
+          resolve(data);
+     })
+};
+
+const deleteMessage = (id)=>{
+
+     return new Promise( async (resolve, reject)=>{
+
+          if(!id){
+          reject('Null Id');  
+          return falsel
+          }
+          
+          store.delete(id).then(()=>{
+               resolve('Message Deleted');
+          }).catch((e)=>{
+               reject('Id not Foound')
+          })
+          
+     })
+
+
+
+};
+
 
 
 module.exports = {
      addMessage,
-     getMessages
+     getMessages,
+     updateMessage,
+     deleteMessage
 }

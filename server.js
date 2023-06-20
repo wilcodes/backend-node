@@ -1,7 +1,8 @@
 const express = require('express');
-const response = require('./network/response');
+const db = require('./db');
 const router = require('./network/routes');
 
+db('mongodb+srv://user:user@cluster0.kpnbpuo.mongodb.net/?retryWrites=true&w=majority');
 var app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
