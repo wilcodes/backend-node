@@ -1,16 +1,26 @@
 const store = require('./store');
 
-const addMessage = (user, message) =>{
+const addMessage = (user, message, chat, file) =>{
 
+
+
+let fileUrl = '';
+
+if(file){
+     fileUrl = 'http://localhost:3000/app/files/'+ file.filename ;
+}
 const fullMessage = {
      user:user,
      message:message,
-     date: new Date()
+     date: new Date(),
+     chat: chat,
+     file: fileUrl
 }
 
+console.log(fileUrl);
 return new Promise((resolve, reject)=>{
 
-     if (!user || !message){
+     if (!user || !message || !chat){
           console.error("Error in message controller");
           reject('Datos Erroneos');
           return false;
@@ -21,44 +31,31 @@ return new Promise((resolve, reject)=>{
 };
 
 const getMessages = (user) =>{
-     return new Promise((resolve, reject)=>{
+     return new Promise((resolve)=>{
           resolve(store.list(user));
      })
 };
 
 const updateMessage = (id, message) =>{
 
-     return new Promise(async (resolve, reject)=>{
-        
           if(!message || !id){
                console.error("Error in message controller:[updateMessage]");
-               reject('Message Is Empty');
+              Promise.reject('Message Is Empty');
                return false;
           }
-          const data = await store.update(id, message);
-          resolve(data);
-     })
+         return  store.update(id, message);
+
+
 };
 
 const deleteMessage = (id)=>{
 
-     return new Promise( async (resolve, reject)=>{
-
           if(!id){
-          reject('Null Id');  
-          return falsel
+          Promise.reject('Null Id');
+          return false;
           }
-          
-          store.delete(id).then(()=>{
-               resolve('Message Deleted');
-          }).catch((e)=>{
-               reject('Id not Foound')
-          })
-          
-     })
 
-
-
+          return store.delete(id);
 };
 
 

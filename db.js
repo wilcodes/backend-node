@@ -2,7 +2,8 @@ const db = require('mongoose');
 db.Promise = global.Promise;
  
 const connect = async (url) =>{
-     try{
+
+     try {
           await db.connect(url);
           console.log('Connected to mongo');
      } catch(e){

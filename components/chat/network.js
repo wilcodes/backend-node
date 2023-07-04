@@ -12,8 +12,9 @@ router.post('/',(req, res)=>{
      })
 });
 
-router.get('/:id',(req, res)=>{
-     controller.getChats(req.params.id)
+router.get('/',(req, res)=>{
+     const user = req.query.id || null;
+     controller.getChats(user)
      .then((data)=>{
           response.success(req, res, data, 201);
      }).catch((e)=>{

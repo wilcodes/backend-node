@@ -13,7 +13,13 @@ const messagesSchema = new Schema({
           type:String,
           required:true,
      },
-     date: Date
+     date: Date,
+     chat:{
+          type:Schema.ObjectId,
+          ref:'chat',
+          required: true
+     },
+     file:String
 });
 
 

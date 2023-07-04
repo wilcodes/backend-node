@@ -6,20 +6,20 @@ const createChat = async (conversation) =>{
 };
 
 
-const getChat = async (user)=>{
+const getChat = async (userId)=>{
 
   let userData = {};
 
-     if (user !== null) {
-       userData = { users: user };
+     if (userId !== null) {
+       userData = { users: userId };
+       console.log(userId);
      }
      
-   
      try {
        const chats = await Model.find(userData).populate('users').exec();
        return chats;
-       
      } catch (error) {
+      
      throw new Error(error);
      }
 
